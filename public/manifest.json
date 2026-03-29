@@ -1,0 +1,16 @@
+{
+  "name": "Grand Slam",
+  "short_name": "Grand Slam",
+  "display": "standalone",
+  "start_url": "/",
+  "background_color": "#F9F9FB",
+  "theme_color": "#F9F9FB",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
