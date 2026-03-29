@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useStore, i18n } from '../store';
 import { TopBar } from '../components/TopBar';
 

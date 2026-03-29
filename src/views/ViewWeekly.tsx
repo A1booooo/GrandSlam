@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Download, Plus } from 'lucide-react';
 import { useStore, i18n } from '../store';
 import { TopBar } from '../components/TopBar';

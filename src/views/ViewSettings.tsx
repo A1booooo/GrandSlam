@@ -1,4 +1,3 @@
-import React from 'react';
 import { Globe, Trash2 } from 'lucide-react';
 import { useStore, i18n } from '../store';
 import { TopBar } from '../components/TopBar';
