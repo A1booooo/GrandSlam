@@ -1,73 +1,86 @@
-# React + TypeScript + Vite
+# Grand Slam Planner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-end, editorial minimalist daily planner and habit tracker built as a Progressive Web App (PWA). Designed for professionals and power users who value structured workflows and absolute focus.
 
-Currently, two official plugins are available:
+## 🌟 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 1. Daily Schedule (今日日程)
 
-## React Compiler
+- **Time Block Architecture:** Precisely manage tasks with start and end times.
+- **Grand Slam Mode:** Complete all tasks for the day to achieve a "Grand Slam" with satisfying visual feedback.
+- **Status Tracking:** Interactive completion toggles with smooth layout transitions.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 2. Weekly Master Blueprint (周模板管理)
 
-## Expanding the ESLint configuration
+- Define standard operating procedures (SOPs) for each model day of the week.
+- One-click synchronization: Instantly pull your weekly blueprint into today's active schedule to eliminate repetitive data entry.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 3. Achievements Heatmap (成就热力图)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Visual 30-day rolling heatmap tracking your "Grand Slam" streaks.
+- Minimalist data visualization keeping you motivated without visual clutter.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 4. PWA First (桌面级体验)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Installable on iOS (Safari) and Android (Chrome) directly to your home screen.
+- Functions entirely locally. No backend required. All data is securely persisted in your device's `localStorage` (Privacy First).
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 5. Multi-Language Support
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Built-in support for English and Simplified Chinese workflows.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠 Tech Stack
+
+- **Framework:** React 19 + TypeScript + Vite
+- **Styling:** Tailwind CSS v4 (Custom High-End Editorial Theme)
+- **State Management:** Zustand (with LocalStorage persistence)
+- **Animation:** Framer Motion
+- **Icons:** Lucide React
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Make sure you have Node.js installed.
+
+### Installation & Running Locally
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/A1booooo/GrandSlam.git
+   cd GrandSlam
+   ```
+
+2. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server
+   ```bash
+   npm run dev
+   ```
+
+## 📱 How to Install (PWA)
+
+**On iOS (Safari):**
+
+1. Open the app link in Safari.
+2. Tap the "Share" icon at the bottom.
+3. Scroll and select "Add to Home Screen".
+
+**On Android (Chrome):**
+
+1. Open the app link in Chrome.
+2. Tap the menu icon (three dots) in the top right.
+3. Select "Install App" or "Add to Home Screen".
+
+## 🎨 Design Philosophy
+
+This project strictly follows an "Architectural Minimalism" aesthetic:
+
+- **0px border-radius:** Sharp, uncompromising utility.
+- **Vellum Layering:** Overlapping white surfaces against light gray backgrounds.
+- **High-Contrast Typography:** Over-scaled thick weights (`font-black`) paired with stark tracking (`tracking-widest`) to establish strong visual hierarchy.
