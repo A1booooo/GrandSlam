@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  /* 1. 颜色系统 (Colors) */
+  --color-surface: #f9f9fb;
+  --color-surface-container-low: #f3f3f5;
+  --color-surface-container-lowest: #ffffff;
+  
+  --color-primary: #000000;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #3b3b3d;
+  
+  --color-secondary: #515f74;
+  
+  --color-on-surface: #1a1c1d;
+  --color-on-surface-variant: #474747;
+  
+  --color-outline: #777777;
+  --color-outline-variant: #c6c6c6;
+
+  /* 2. 阴影系统 (Elevation & Depth) */
+  --shadow-ambient: 0px 20px 40px rgba(26, 28, 29, 0.06);
+
+  /* 3. 排版系统 (Typography) */
+  /* 如果你没安 Inter 字体，它会自动降级回系统默认无衬线字体 */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --tracking-tight-display: -0.02em; /* Display 专用字间距 */
+  --tracking-wide-label: 0.05em;     /* Label 专用字间距 */
+}
+
+/* 4. 全局强制基础样式 */
+@layer base {
+  body {
+    /* 强制背景为 surface，文字为 on-surface，抗锯齿以体现高端印刷感 */
+    @apply bg-surface text-on-surface font-sans antialiased selection:bg-primary selection:text-white;
+  }
+
+  /* 强制全局不允许出现圆角 (The Disciplined Architect) */
+  * {
+    @apply rounded-none;
+  }
+}
