@@ -53,7 +53,7 @@ export const AuthPage = () => {
 
           {/* Header Section */}
           <section className="mb-12">
-            <h2 className="text-5xl sm:text-6xl font-black tracking-[-0.04em] text-[#1D1D1F] leading-tight uppercase">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-[#1D1D1F] leading-none uppercase break-words">
               {t.systemAccess}
             </h2>
             <p className="mt-4 text-[#474747] font-medium tracking-wide uppercase text-xs">
