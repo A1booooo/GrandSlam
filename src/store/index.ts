@@ -79,11 +79,16 @@ export interface StoreState {
   language: Language;
   currentView: ViewType;
   currentDate: string;
+  isAuthModalOpen: boolean;
+  user: any;
+  session: any;
   editingTask: EditingTask | null;
   showGrandSlamEffect: boolean;
 
   setLanguage: (lang: Language) => void;
   setView: (view: ViewType) => void;
+  setIsAuthModalOpen: (open: boolean) => void;
+  setUserSession: (user: any, session: any) => void;
   setEditingTask: (payload: EditingTask | null) => void;
   setShowGrandSlamEffect: (show: boolean) => void;
 
@@ -109,12 +114,17 @@ export const useStore = create<StoreState>()(
       // UI 状态
       language: 'en',
       currentView: 'SCHEDULE', 
+      isAuthModalOpen: false,
+      user: null,
+      session: null,
       currentDate: getTodayStr(),
       editingTask: null,
       showGrandSlamEffect: false,
 
       setLanguage: (lang) => set({ language: lang }),
       setView: (view) => set({ currentView: view }),
+      setIsAuthModalOpen: (open) => set({ isAuthModalOpen: open }),
+      setUserSession: (user, session) => set({ user, session }),
       setEditingTask: (payload) => set({ editingTask: payload }),
       setShowGrandSlamEffect: (show) => set({ showGrandSlamEffect: show }),
 
