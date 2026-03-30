@@ -54,9 +54,9 @@ export const TaskEditorModal = () => {
       {editingTask && form && (
         <motion.div 
           initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          className="fixed inset-0 z-50 bg-[#F9F9FB] flex flex-col mt-8"
+          className="fixed inset-0 z-50 bg-[#F9F9FB] flex flex-col"
         >
-          <header className="flex justify-between items-center px-6 h-20 bg-[#F9F9FB] border-b-2 border-[#1D1D1F] shrink-0">
+          <header className="flex justify-between items-center px-6 h-20 bg-[#F9F9FB] border-b-2 border-[#1D1D1F] shrink-0 mt-8">
             <button onClick={() => setEditingTask(null)} className="font-black uppercase text-xs tracking-widest text-[#1D1D1F]/50 hover:text-[#1D1D1F]">{t.cancel}</button>
             <h1 className="font-black uppercase text-sm tracking-tight text-[#1D1D1F]">{isNew ? t.newTask : t.editTask} {isTemplate && '(Template)'}</h1>
             <button onClick={handleSave} className="font-black uppercase text-xs tracking-widest bg-[#1D1D1F] text-[#F9F9FB] px-6 py-3 hover:bg-[#72FF70] hover:text-[#1D1D1F] transition-colors">
@@ -70,7 +70,7 @@ export const TaskEditorModal = () => {
               <input 
                 type="text" value={form.name} onChange={e => setForm({...form, name: e.target.value})}
                 className="w-full bg-transparent border-t-0 border-x-0 border-b-[3px] border-[#1D1D1F] text-3xl font-black tracking-tighter py-3 focus:ring-0 focus:outline-none placeholder:text-[#1D1D1F]/20 rounded-none"
-                placeholder={t.taskIdentity} autoFocus
+                placeholder={t.taskIdentity}
               />
             </section>
 
