@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -6,8 +6,8 @@ import { useStore } from './store';
 import { supabase } from './lib/supabase';
 import { BottomNav } from './components/BottomNav';
 import { TaskEditorModal } from './components/TaskEditorModal';
-import { AuthModal } from './components/AuthModal';
 import { GrandSlamEffect } from './components/GrandSlamEffect';
+import { AuthPage } from './views/AuthPage';
 
 import { ViewSchedule } from './views/ViewSchedule';
 import { ViewWeekly } from './views/ViewWeekly';
@@ -16,6 +16,7 @@ import { ViewSettings } from './views/ViewSettings';
 
 export default function App() {
   const { currentView, showGrandSlamEffect, setUserSession, loadFromCloud, user } = useStore();
+  const [isInitializing, setIsInitializing] = useState(true);
 
   useEffect(() => {
     const fontLink = document.createElement('link');
@@ -27,11 +28,13 @@ export default function App() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUserSession(session?.user ?? null, session);
       if (session?.user) loadFromCloud();
+      setIsInitializing(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUserSession(session?.user ?? null, session);
       if (session?.user) loadFromCloud();
+      setIsInitializing(false);
     });
 
     return () => { 
@@ -49,6 +52,14 @@ export default function App() {
     });
     return unsub;
   }, [user]);
+
+  if (isInitializing) {
+    return <div className="min-h-screen bg-[#F9F9FB] flex items-center justify-center" />; 
+  }
+
+  if (!user) {
+    return <AuthPage />;
+  }
 
   return (
     <div className="min-h-screen bg-[#F9F9FB] text-[#1D1D1F] font-['Inter'] selection:bg-[#72FF70] selection:text-[#1D1D1F] relative overflow-hidden">
@@ -69,7 +80,6 @@ export default function App() {
 
       <BottomNav />
       <TaskEditorModal />
-      <AuthModal />
 
       <AnimatePresence>
         {showGrandSlamEffect && <GrandSlamEffect />}

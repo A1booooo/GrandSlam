@@ -1,5 +1,6 @@
 import { Globe, Trash2 } from 'lucide-react';
 import { useStore, i18n } from '../store';
+import { supabase } from '../lib/supabase';
 import { TopBar } from '../components/TopBar';
 
 export const ViewSettings = () => {
@@ -71,10 +72,14 @@ export const ViewSettings = () => {
         {/* Danger Zone */}
         <section className="pt-8 border-t-2 border-[#1D1D1F]/10">
           <button 
-            onClick={() => { localStorage.removeItem('planner-pwa-storage'); window.location.reload(); }}
+            onClick={async () => { 
+              try { await supabase.auth.signOut(); } catch(e) {}
+              localStorage.removeItem('planner-pwa-storage'); 
+              window.location.reload(); 
+            }}
             className="w-full p-6 bg-[#1D1D1F]/5 text-[#1D1D1F] font-black uppercase tracking-widest text-xs hover:bg-[#1D1D1F] hover:text-[#ba1a1a] transition-colors flex items-center justify-center gap-3"
           >
-            <Trash2 size={18} /> {t.clearStorage}
+            <Trash2 size={18} /> {t.logout}
           </button>
         </section>
       </main>

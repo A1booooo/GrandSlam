@@ -19,10 +19,21 @@ export const i18n = {
     androidStep1: "Tap the menu icon (three dots) in Chrome.",
     androidStep2: "Select 'Install App' or 'Add to Home Screen'.",
     visitMsg: 'Please visit this app on iOS Safari or Android Chrome to install as a PWA desktop application.',
-    clearStorage: 'Clear Local Storage', language: 'Language Switch', langLabel: 'Switch between EN / ZH',
+    logout: 'Logout / Terminate Session', language: 'Language Switch', langLabel: 'Switch between EN / ZH',
     taskIdentity: 'Task Identity', startBlock: 'Start Block', endBlock: 'End Block',
     terminate: 'Terminate Task', cancel: 'Cancel', save: 'Save', newTask: 'New Task', editTask: 'Edit Task',
-    opStatus: 'Operational Status', completed100: '100% Completed'
+    opStatus: 'Operational Status', completed100: '100% Completed',
+    
+    // Auth Strings
+    systemAccess: 'SYSTEM_ACCESS',
+    idRequired: 'IDENTIFICATION REQUIRED / TERMINAL 04-A',
+    userIdentifier: 'USER_IDENTIFIER',
+    securePhrase: 'SECURE_PHRASE',
+    authorize: 'AUTHORIZE',
+    createAccount: 'CREATE_ACCOUNT',
+    authError: 'AUTHENTICATION_FAILURE',
+    emailPlaceholder: 'EMAIL@SYSTEM.COM',
+    signIn: 'SIGN_IN'
   },
   zh: {
     navDaily: '日程', navWeekly: '周模板', navGrid: '成就', navPWA: '设置',
@@ -40,10 +51,21 @@ export const i18n = {
     androidStep1: "点击 Chrome 浏览器右上角的菜单按钮 (三个点)。",
     androidStep2: "选择「安装应用」或「添加到主屏幕」。",
     visitMsg: '请在 iOS Safari 或 Android Chrome 浏览器中访问以安装为桌面级 PWA 应用。',
-    clearStorage: '清空本地数据', language: '系统语言', langLabel: '在中英文之间切换',
+    logout: '退出登录与清空环境', language: '系统语言', langLabel: '在中英文之间切换',
     taskIdentity: '任务名称', startBlock: '开始时间', endBlock: '结束时间',
     terminate: '删除任务', cancel: '取消', save: '保存', newTask: '新建任务', editTask: '编辑任务',
-    opStatus: '系统运行状态', completed100: '100% 已完成'
+    opStatus: '系统运行状态', completed100: '100% 已完成',
+
+    // Auth Strings
+    systemAccess: '系统接入许可',
+    idRequired: '要求身份验证 / 终端许可 04-A',
+    userIdentifier: '识别代码(邮箱)',
+    securePhrase: '安全密钥(密码)',
+    authorize: '授权执行',
+    createAccount: '初始化新载体',
+    authError: '执行失败: 凭证无效',
+    emailPlaceholder: 'USER@SYSTEM.COM',
+    signIn: '返回接入'
   }
 };
 
@@ -80,7 +102,6 @@ export interface StoreState {
   language: Language;
   currentView: ViewType;
   currentDate: string;
-  isAuthModalOpen: boolean;
   user: any;
   session: any;
   editingTask: EditingTask | null;
@@ -88,7 +109,6 @@ export interface StoreState {
 
   setLanguage: (lang: Language) => void;
   setView: (view: ViewType) => void;
-  setIsAuthModalOpen: (open: boolean) => void;
   setUserSession: (user: any, session: any) => void;
   setEditingTask: (payload: EditingTask | null) => void;
   setShowGrandSlamEffect: (show: boolean) => void;
@@ -118,7 +138,6 @@ export const useStore = create<StoreState>()(
       // UI 状态
       language: 'en',
       currentView: 'SCHEDULE', 
-      isAuthModalOpen: false,
       user: null,
       session: null,
       currentDate: getTodayStr(),
@@ -127,7 +146,6 @@ export const useStore = create<StoreState>()(
 
       setLanguage: (lang) => set({ language: lang }),
       setView: (view) => set({ currentView: view }),
-      setIsAuthModalOpen: (open) => set({ isAuthModalOpen: open }),
       setUserSession: (user, session) => set({ user, session }),
       setEditingTask: (payload) => set({ editingTask: payload }),
       setShowGrandSlamEffect: (show) => set({ showGrandSlamEffect: show }),
