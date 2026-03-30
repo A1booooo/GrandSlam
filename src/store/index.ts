@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { supabase } from '../lib/supabase';
 
 export const i18n = {
   en: {
@@ -104,6 +105,9 @@ export interface StoreState {
   updateTemplateTask: (dayIndex: number, updatedTask: Task) => void;
   deleteTemplateTask: (dayIndex: number, taskId: string) => void;
   syncWeeklyTemplate: (date: string) => void;
+
+  loadFromCloud: () => Promise<void>;
+  syncToCloud: () => Promise<void>;
 }
 
 const getTodayStr = () => new Date().toISOString().split('T')[0];
@@ -135,6 +139,32 @@ export const useStore = create<StoreState>()(
         days: {
           0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: []
         }
+      },
+
+      loadFromCloud: async () => {
+        const { user } = get();
+        if (!user) return;
+        const { data, error } = await supabase.from('user_data').select('plans, weeklyTemplate').eq('id', user.id).single();
+        if (data && !error) {
+          // If the cloud has data, we overwrite local data.
+          // Fallback to local defaults if cloud object is somehow empty
+          set({ 
+             plans: data.plans || get().plans, 
+             weeklyTemplate: data.weeklyTemplate || get().weeklyTemplate 
+          });
+        }
+      },
+
+      syncToCloud: async () => {
+        const { user, plans, weeklyTemplate } = get();
+        if (!user) return;
+        // Upsert uses the user ID as Primary Key
+        await supabase.from('user_data').upsert({ 
+          id: user.id, 
+          plans, 
+          weeklyTemplate, 
+          updated_at: new Date().toISOString() 
+        });
       },
 
       // --- 每日任务 Actions ---
