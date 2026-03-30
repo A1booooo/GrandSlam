@@ -54,7 +54,7 @@ export const TaskEditorModal = () => {
       {editingTask && form && (
         <motion.div 
           initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          className="fixed inset-0 z-50 bg-[#F9F9FB] flex flex-col"
+          className="fixed inset-0 z-50 bg-[#F9F9FB] flex flex-col mt-8"
         >
           <header className="flex justify-between items-center px-6 h-20 bg-[#F9F9FB] border-b-2 border-[#1D1D1F] shrink-0">
             <button onClick={() => setEditingTask(null)} className="font-black uppercase text-xs tracking-widest text-[#1D1D1F]/50 hover:text-[#1D1D1F]">{t.cancel}</button>

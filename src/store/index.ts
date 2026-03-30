@@ -226,6 +226,11 @@ export const useStore = create<StoreState>()(
       })
 
     }),
-    { name: 'planner-pwa-storage' }
+    { 
+      name: 'planner-pwa-storage',
+      partialize: (state) => Object.fromEntries(
+        Object.entries(state).filter(([key]) => !['currentDate', 'editingTask', 'showGrandSlamEffect'].includes(key))
+      ),
+    }
   )
 );
