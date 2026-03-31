@@ -1,15 +1,37 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useStore, i18n } from '../store';
 import { TopBar } from '../components/TopBar';
 
 export const ViewAchievements = () => {
   const { plans, language } = useStore();
   const t = i18n[language];
-  
+  const [viewDate, setViewDate] = useState(() => new Date());
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart === null) return;
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStart - touchEnd;
+    
+    // Swipe left (next month)
+    if (diff > 50) {
+      setViewDate(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+    }
+    // Swipe right (prev month)
+    else if (diff < -50) {
+      setViewDate(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+    }
+    setTouchStart(null);
+  };
+
   const calendarData = useMemo(() => {
     const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
+    const year = viewDate.getFullYear();
+    const month = viewDate.getMonth();
     
     // Dynamically calculate days in the current month
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -28,7 +50,7 @@ export const ViewAchievements = () => {
       
       const plan = plans[dateStr];
       const isSlam = plan?.isGrandSlam || false;
-      const isToday = dayNum === today.getDate();
+      const isToday = year === today.getFullYear() && month === today.getMonth() && dayNum === today.getDate();
       
       if (isSlam) monthlySlams++;
       grid.push({ date: dateStr, dayNum, isSlam, isToday });
@@ -58,7 +80,7 @@ export const ViewAchievements = () => {
     const monthName = language === 'zh' ? monthNamesZH[month] : monthNamesEN[month];
 
     return { grid, firstDay, currentStreak, monthlySlams, monthName, year };
-  }, [plans, language]);
+  }, [plans, language, viewDate]);
 
   const daysEN = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   const daysZH = ['日', '一', '二', '三', '四', '五', '六'];
@@ -70,7 +92,7 @@ export const ViewAchievements = () => {
       <main className="px-6 pt-12 max-w-2xl mx-auto space-y-16">
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-[#FFFFFF] border-2 border-[#1D1D1F] p-6">
-            <span className="font-['Inter'] text-[10px] font-black uppercase tracking-widest text-[#1D1D1F]/50 block mb-2">{t.slams30} (MONTH)</span>
+            <span className="font-['Inter'] text-[10px] font-black uppercase tracking-widest text-[#1D1D1F]/50 block mb-2">{t.slams30}</span>
             <div className="text-5xl font-black tracking-tighter text-[#1D1D1F]">{calendarData.monthlySlams}</div>
           </div>
           <div className="bg-[#1D1D1F] p-6 text-[#F9F9FB]">
@@ -79,11 +101,33 @@ export const ViewAchievements = () => {
           </div>
         </div>
 
-        <section className="space-y-6">
+        <section className="space-y-6" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
           <div className="flex justify-between items-end border-b-2 border-[#1D1D1F]/10 pb-4">
-            <h3 className="font-['Inter'] text-xs font-black tracking-widest uppercase text-[#1D1D1F]">
-              {calendarData.monthName} {calendarData.year}
-            </h3>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => setViewDate(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1))}
+                className="text-[#1D1D1F]/40 hover:text-[#1D1D1F] transition-colors p-2 -ml-2 font-black"
+              >
+                &lt;
+              </button>
+              <h3 className="font-['Inter'] text-xs font-black tracking-widest uppercase text-[#1D1D1F] select-none">
+                {calendarData.monthName} {calendarData.year}
+              </h3>
+              <button 
+                onClick={() => setViewDate(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1))}
+                className="text-[#1D1D1F]/40 hover:text-[#1D1D1F] transition-colors p-2 font-black"
+              >
+                &gt;
+              </button>
+            </div>
+            {viewDate.getMonth() !== new Date().getMonth() || viewDate.getFullYear() !== new Date().getFullYear() ? (
+              <button 
+                onClick={() => setViewDate(new Date())}
+                className="text-[10px] font-black tracking-widest uppercase text-[#1D1D1F]/40 hover:text-[#1D1D1F] transition-colors"
+              >
+                TODAY
+              </button>
+            ) : null}
           </div>
           
           <div className="grid grid-cols-7 gap-2">
